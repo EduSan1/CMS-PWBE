@@ -1,0 +1,20 @@
+.icones {
+    height: 50px;
+    width: 50px;
+}
+.icone-sair {
+    height: 30px;
+    width: 30px;
+}
+
+.cls-1 {
+    fill: #2c2c2c;
+}
+
+.cls-2 {
+    fill: none;
+    stroke: #000;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 2px;
+  }

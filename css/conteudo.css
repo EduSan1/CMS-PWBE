@@ -1,0 +1,25 @@
+.conteudo {
+
+    width: inherit;
+    min-height: 55vh;
+    height: auto;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-direction: column;
+
+    padding: 30px;
+
+}
+
+.conteudo-titulo > p {
+    
+    color: #2c2c2c;
+    font-size: 18px;
+}
+.conteudo-corpo {
+    height: 1000px;
+    width: 30px;
+    background-color: aqua;
+}

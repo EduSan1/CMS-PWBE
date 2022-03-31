@@ -28,7 +28,7 @@
     </div>
   </section>
   <section class="menu">
-  <div class="menu-acoes">
+    <div class="menu-acoes">
       <div class="menu-acoes-esquerda">
         <div class="menu-adm-produtos">
           <a href="#">
@@ -101,13 +101,42 @@
         </a>
       </div>
     </div>
-    
+
   </section>
   <section class="conteudo">
-    <div class="conteudo-titulo">
+    <!-- <div class="conteudo-titulo">
       <p>Titulo da Sessão</p>
-    </div>
-    <div class="conteudo-corpo"></div>
+    </div> -->
+    <div class="conteudo-corpo">
+      <table id="tblContato">
+        <tr>
+          <td id="tblTitulo" colspan="6">
+            <h1>Mensagens</h1>
+          </td>
+        </tr>
+        <tr id="tblLinhas">
+          <td class="tblColunas destaque"> Nome </td>
+          <td class="tblColunas destaque"> Email </td>
+          <td class="tblColunas destaque"> Mensagem </td>
+        </tr>
+
+        <?php
+        require_once('controller/controllerContatos.php');
+
+        $listContato = listarContato();
+        
+
+        foreach ($listContato as $item) {
+        ?>
+          <tr class="conteudo-corpo-contato">
+
+            <td class="conteudo-corpo-contato-nome"><?= $item['nome'] ?></td>
+            <td class="conteudo-corpo-contato-email"><?= $item['email'] ?></td>
+            <td class="conteudo-corpo-contato-mensagem"><?= $item['mensagem'] ?></td>
+
+          </tr>
+        <?php } ?>
+      </table>
   </section>
   <footer>
     <div class="footer-container">

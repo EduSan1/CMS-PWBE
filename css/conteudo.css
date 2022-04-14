@@ -8,18 +8,34 @@
     align-items: flex-start;
     justify-content: space-between;
     flex-direction: column;
-
-    padding: 30px;
-
+}
+.tblColunas-destaque {
+    text-align: center;
+    background-color: #616161;
+    color: #fff;
+    padding: 3px;
 }
 
-.conteudo-titulo > p {
-    
-    color: #2c2c2c;
-    font-size: 18px;
+.conteudo-corpo-contato-nome,
+.conteudo-corpo-contato-email,
+.conteudo-corpo-contato-mensagem,
+.conteudo-corpo-contato-excluir{
+    height: 80px;
+    margin: 2px;
+    padding: 5px;
+    border: 2px solid gray;
 }
-/* .conteudo-corpo {
-    height: 1000px;
-    width: 30px;
-    background-color: aqua;
-} */
+.conteudo-corpo-contato-nome {width: 15%;}
+.conteudo-corpo-contato-email {
+    width: 10%;
+    font-size: 12px;
+}
+.conteudo-corpo-contato-mensagem {
+    width: 65%;
+
+    font-size: 12px;
+}
+.conteudo-corpo-contato-excluir {
+     width: 10%;
+     text-align: center;
+}

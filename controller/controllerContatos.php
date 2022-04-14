@@ -23,4 +23,24 @@ function listarContato() {
     }
 }
 
+function excluirContato($id) {
+
+    if ($id != 0 && !empty($id) && is_numeric($id)) {
+
+        require_once('model/bd/contato.php');
+
+        if (deleteContato($id))
+            return true;
+        else 
+            return array(
+                'idErro'  => 3,
+                'message' => 'o banco de dados não pode excluir o registro'
+            );
+
+    }else 
+        array(
+            'idErro'  => 5,
+            'message' => 'informe um id validado');
+}
+
 ?>

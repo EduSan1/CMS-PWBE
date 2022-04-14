@@ -1,15 +1,46 @@
+<?php
+
+if(file_exists('../module/config.php')) {
+  require_once('../module/config.php');
+  $teste = "../";
+  $cmsCaminho = "../";
+}else {
+  require_once('module/config.php');
+  $teste = "";
+  $cmsCaminho = "../CMS-PWBE/";
+}
+
+
+
+  $form = $teste."router.php?component=genero&action=inserir";
+  if(session_status()) {
+
+    if (!empty($_SESSION['dadosGenero'])) {
+
+      $id = $_SESSION['dadosGenero']['id'];
+      $nome = $_SESSION['dadosGenero']['nome'];
+
+      $form = $teste."router.php?component=genero&action=editar&id=".$id;
+
+      unset($_SESSION['dadosGenero']);
+
+    }
+  }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <link rel="stylesheet" href="./css/reset.css" />
-  <link rel="stylesheet" href="./css/icone.css" />
-  <link rel="stylesheet" href="./css/header.css" />
-  <link rel="stylesheet" href="./css/menu.css">
-  <link rel="stylesheet" href="./css/footer.css">
-  <link rel="stylesheet" href="./css/conteudo.css">
+  <link rel="stylesheet" href="<?=$teste?>css/reset.css" />
+  <link rel="stylesheet" href="<?=$teste?>css/icone.css" />
+  <link rel="stylesheet" href="<?=$teste?>css/header.css" />
+  <link rel="stylesheet" href="<?=$teste?>css/menu.css">
+  <link rel="stylesheet" href="<?=$teste?>css/footer.css">
+  <link rel="stylesheet" href="<?=$teste?>css/conteudo-categorias.css">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Document</title>
 </head>
@@ -103,36 +134,41 @@
     </div>
 
   </section>
-  <section class="conteudo">
-      <table class="tblContato" id="tblContato">
+  <section class="conteudo-categorias">
+      <form action="<?=$form?>" method="post" class="cadastro-categorias">
+          <div classr="cadastro-categorias-campo">
+              <p>Nome: </p>
+              <input type="text" name="nome" value="<?= isset($nome)?$nome:null ?>" placeholder="Digite o nome de categoria">
+          </div>
+          <button class="cadastro-categoria-botao"> Cadastrar Categoria</button>
+      </form>
+      <table class="categorias-tabela" >
         <tr>
-          <td id="tblTitulo" colspan="6">
-            <h1>Mensagens</h1>
+          <td colspan="6">
+            <h1>Categorias</h1>
           </td>
         </tr>
-        <tr id="tblLinhas">
-          <td class="tblColunas-destaque"> Nome </td>
-          <td class="tblColunas-destaque"> Email </td>
-          <td class="tblColunas-destaque"> Mensagem </td>
-          <td class="tblColunas-destaque"> Excluir </td>
+        <tr>
+          <td class="tblCategoriasColunas-destaqu"> Nome </td>
+          <td class="tblCategoriasColunas-destaqu"> Editar </td>
+          <td class="tblCategoriasColunas-destaqu"> Excluir </td>
         </tr>
-
         <?php
-        require_once('controller/controllerContatos.php');
+        
+        require_once($caminho.'controller/controllerGenero.php');
 
-        $listContato = listarContato();
+        $listGenero = listarGenero();
         
 
-        foreach ($listContato as $item) {
+        foreach ($listGenero as $item) {
         ?>
-          <tr class="conteudo-corpo-contato">
+          <tr class="conteudo-corpo-categoria">
 
-            <td class="conteudo-corpo-contato-nome"><?= $item['nome'] ?></td>
-            <td class="conteudo-corpo-contato-email"><?= $item['email'] ?></td>
-            <td class="conteudo-corpo-contato-mensagem"><?= $item['mensagem'] ?></td>
-            <td class="conteudo-corpo-contato-excluir"><a href="router.php?component=contatos&action=deletar&id=<?= $item['id']?>">excluir comentario<a/></td>
+            <td class="conteudo-corpo-categoria-nome"><?= $item['nome']?></td>
+            <td class="conteudo-corpo-categoria-editar"><a href="<?=$cmsCaminho?>router.php?component=genero&action=buscar&id=<?= $item['id']?>">editar genero<a/></td>
+            <td class="conteudo-corpo-categoria-excluir"><a href="<?=$cmsCaminho?>router.php?component=genero&action=deletar&id=<?= $item['id']?>">excluir genero<a/></td>
           </tr>
-        <?php } ?>
+          <?php } ?>
       </table>
   </section>
   <footer>

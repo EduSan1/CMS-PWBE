@@ -111,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                 $idContato = $_GET['id'];
 
                 $resposta = atualizarGenero($_POST, $idContato);
-            
+
                 if (is_bool($resposta)) {
 
                     if ($resposta) {
@@ -135,6 +135,38 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                     </script>");
                 }
                 break;
+            }
+        case 'USUARIO';
+            require_once('controller/controllerUsuario.php');
+
+            if ($action == 'INSERIR') {
+                if ($_POST['nome'] != "" && $_POST['email'] != "" && $_POST['senha'] != "" ) {
+                    $resposta = inserirUsuario($_POST);
+
+                    if (is_bool($resposta)) {
+                        echo ("<script>
+                alert('Usuario inserido no banco de dados');
+                window.location.href = 'pages/categorias.php';
+                </script>");
+                    } elseif (is_array($resposta)) {
+                        echo ("<script>
+                alert('" . $resposta["message"] . "');
+                window.location.href = 'pages/categorias.php';
+                </script>");
+                    } else {
+
+                        echo ("<script>
+                alert('CARAI MENÓ, COMO TU FEZ ISSO??');
+                window.location.href = 'pages/categorias.php';
+                </script>");
+                    }
+                } else {
+
+                    echo ("<script>
+                    alert('Preencha todos os campos para poder cadastrar');
+                    window.location.href = 'pages/categorias.php';
+                    </script>");
+                }
             }
     }
 }

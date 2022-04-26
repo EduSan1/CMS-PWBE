@@ -134,37 +134,96 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                     window.location.href = 'pages/categorias.php';
                     </script>");
                 }
-                break;
+
             }
         case 'USUARIO';
             require_once('controller/controllerUsuario.php');
 
             if ($action == 'INSERIR') {
-                if ($_POST['nome'] != "" && $_POST['email'] != "" && $_POST['senha'] != "" ) {
+                if ($_POST['nome'] != "" && $_POST['email'] != "" && $_POST['senha'] != "") {
                     $resposta = inserirUsuario($_POST);
 
                     if (is_bool($resposta)) {
                         echo ("<script>
                 alert('Usuario inserido no banco de dados');
-                window.location.href = 'pages/categorias.php';
+                window.location.href = 'pages/usuario.php';
                 </script>");
                     } elseif (is_array($resposta)) {
                         echo ("<script>
                 alert('" . $resposta["message"] . "');
-                window.location.href = 'pages/categorias.php';
+                window.location.href = 'pages/usuario.php';
                 </script>");
                     } else {
 
                         echo ("<script>
                 alert('CARAI MENÓ, COMO TU FEZ ISSO??');
-                window.location.href = 'pages/categorias.php';
+                window.location.href = 'pages/usuario.php';
                 </script>");
                     }
                 } else {
 
                     echo ("<script>
                     alert('Preencha todos os campos para poder cadastrar');
-                    window.location.href = 'pages/categorias.php';
+                    window.location.href = 'pages/usuario.php';
+                    </script>");
+                }
+            } else if ($action == 'DELETAR') {
+
+                $id = strtoupper($_GET['id']);
+                $resposta = excluirUsuario($id);
+
+                if (is_bool($resposta)) {
+                    echo ("<script>
+                alert('Contato excluido do banco de dados');
+                window.location.href = 'pages/usuario.php';
+                </script>");
+                } elseif (is_array($resposta)) {
+                    echo ("<script>
+                alert('" . $resposta["message"] . "');
+                window.location.href = 'pages/usuario.php';
+                </script>");
+                } else {
+
+                    echo ("<script>
+                alert('CARAI MENÓ, COMO TU FEZ ISSO??');
+                window.location.href = 'pages/usuario.php';
+                </script>");
+                }
+            } else if ($action == 'BUSCAR') {
+                $id = strtoupper($_GET['id']);
+
+                $dado = buscarUsuario($id);
+
+
+                $_SESSION['dadosUsuario'] = $dado;
+
+                require_once("pages/usuario.php");
+            } else if ($action == 'EDITAR') {
+                $idUsuario = $_GET['id'];
+                echo("teste");
+
+                $resposta = atualizarUsuario($_POST, $idUsuario);
+
+                if (is_bool($resposta)) {
+
+                    if ($resposta) {
+
+                        echo ("<script>
+                       alert('Registro atualizado com sucesso');
+                       window.location.href = 'pages/usuario.php';
+                       </script>");
+                    }
+                } elseif (is_array($resposta)) {
+
+                    echo ("<script>
+                    alert('" . $resposta["message"] . "');
+                    window.location.href = 'pages/usuario.php';
+                    </script>");
+                } else {
+
+                    echo ("<script>
+                    alert('CARAI MENÓ, COMO TU FEZ ISSO??');
+                    window.location.href = 'pages/usuario.php';
                     </script>");
                 }
             }

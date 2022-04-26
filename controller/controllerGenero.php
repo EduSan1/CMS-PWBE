@@ -1,66 +1,70 @@
 <?php
 
-    /*******************************************************************************************
+/*******************************************************************************************
  Objetivo: arquivo responsável pela manipulação de dados de genero
  Obs: esse arquivo fará a ponte entre a View e a Model
  Autor: Eduardo Santos Nascimento
 Data: 07/03/2022
 Versão 1.0
  ********************************************************************************************/
-  
-if(file_exists('../module/config.php')) {
+
+if (file_exists('../module/config.php')) {
     require_once('../module/config.php');
-  }else {
+} else {
     require_once('module/config.php');
-  }
+}
 
 $caminhoSession = "";
-  
- 
- function listarGenero() {
 
-  if(session_status()) {
 
-    if (!empty($_SESSION['caminhoSession'])) {
+function listarGenero()
+{
 
-      $caminhoSession = $_SESSION['caminhoSession'].'model/bd/genero.php';
+    if (session_status()) {
+
+        if (!empty($_SESSION['caminhoSession'])) {
+
+            $caminhoSession = $_SESSION['caminhoSession'] . 'model/bd/genero.php';
+        }
     }
-  }
-    
+
     require_once($caminhoSession);
 
     $dados = selectAllGeneros();
 
     if (!empty($dados)) {
         return $dados;
-    }else {
+    } else {
         return false;
     }
- }
+}
 
- function excluirGenero($id) {
+function excluirGenero($id)
+{
 
     if ($id != 0 && !empty($id) && is_numeric($id)) {
 
         require_once("model/bd/genero.php");
 
         if (deleteGenero($id))
-        return true;
-    else 
+            return true;
+        else
+            return array(
+                'idErro'  => 3,
+                'message' => 'o banco de dados não pode excluir o registro'
+            );
+    } else {
         return array(
-            'idErro'  => 3,
-            'message' => 'o banco de dados não pode excluir o registro'
+            'idErro'  => 5,
+            'message' => 'informe um id validado'
         );
-// else 
-//     return array(
-//         'idErro'  => 5,
-//         'message' => 'informe um id validado');
     }
 }
- function inserirGenero($dadosGenero) {
+function inserirGenero($dadosGenero)
+{
     if (!empty($dadosGenero)) {
 
-        if(!empty($dadosGenero['nome'])) {
+        if (!empty($dadosGenero['nome'])) {
             $arrayDados = array(
                 'nome' => $dadosGenero['nome']
             );
@@ -73,23 +77,22 @@ $caminhoSession = "";
                     'idErro'  => 2,
                     'message' => 'deu ruim na hora de inserir os dados no banco de dados'
                 );
-
         }
-
     }
- }
+}
 
- function buscarGenero($id) {
+function buscarGenero($id)
+{
 
-    if(session_status()) {
+    if (session_status()) {
 
         if (!empty($_SESSION['caminhoSession'])) {
-    
-          $caminhoSession = $_SESSION['caminhoSession'].'model/bd/genero.php';
-        }
-      }
 
-   require_once($caminhoSession);
+            $caminhoSession = $_SESSION['caminhoSession'] . 'model/bd/genero.php';
+        }
+    }
+
+    require_once($caminhoSession);
     if ($id != 0 && !empty($id) && is_numeric($id)) {
 
         $dado = selectByIdGenero($id);
@@ -99,16 +102,15 @@ $caminhoSession = "";
         } else {
             return false;
         }
+    } else
+        return array(
+            'idErro'  => 5,
+            'message' => 'informe um id validado'
+        );
+}
 
-    }else
-    return array(
-        'idErro'  => 5,
-        'message' => 'informe um id validado'
-    );
-
- }
-
- function atualizarGenero($dadosGenero,$id) {
+function atualizarGenero($dadosGenero, $id)
+{
     if (!empty($dadosGenero)) {
         //validação dos campos  nome, celular e email, pois são campos obrigatórios
         if (!empty($dadosGenero['nome'])) {
@@ -117,9 +119,9 @@ $caminhoSession = "";
                 $arrayDados = array(
                     'id'         => $id,
                     'nome'       => $dadosGenero['nome'],
-                    
+
                 );
-                echo($arrayDados);
+                echo ($arrayDados);
 
                 //import do arquivo de modlagem para mannipular o BD
                 require_once("./model/bd/genero.php");
@@ -131,7 +133,7 @@ $caminhoSession = "";
                         'idErro'  => 2,
                         'message' => 'Editado com sucesso'
                     );
-            }else 
+            } else
                 return array(
                     'idErro'  => 5,
                     'message' => 'informe um id validado'
@@ -143,6 +145,4 @@ $caminhoSession = "";
             );
         }
     }
- }
-
-?>
+}

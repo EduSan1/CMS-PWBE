@@ -12,15 +12,30 @@ if(file_exists('../module/config.php')) {
 
   $form = $teste."router.php?component=usuario&action=inserir";
 
+  if(session_status()) {
+
+    if (!empty($_SESSION['dadosUsuario'])) {
+
+      $id = $_SESSION['dadosUsuario']['id'];
+      $nome = $_SESSION['dadosUsuario']['nome'];
+      $email = $_SESSION['dadosUsuario']['email'];
+
+      $form = $teste."router.php?component=usuario&action=editar&id=".$id;
+
+      unset($_SESSION['dadosUsuario']);
+
+    }
+  }
+
 ?>
   <form action="<?=$form?>" method="post" class="">
           <div class="">
               <p>Nome: </p>
-              <input type="text" name="nome" value="" >
+              <input type="text" value="<?= isset($nome)?$nome:null ?>" name="nome" value="" >
           </div>
           <div class="">
               <p>Email: </p>
-              <input type="text" name="email" value="" >
+              <input type="text" value="<?= isset($email)?$email:null ?>" name="email" value="" >
           </div>
           <div class="">
               <p>Senha: </p>
@@ -44,7 +59,11 @@ foreach ($listUsuario as $item) {
     echo("---");
     echo($item['senha']);
     echo("---");
-    echo($item['email']);
+    echo($item['email']);    
+    echo("=//////=");
+    echo('<a href ="'.$cmsCaminho.'router.php?component=usuario&action=deletar&id='.$item['idUsuario'].'"> excluir <a/>');
+    echo("=//////=");
+    echo('<a href ="'.$cmsCaminho.'router.php?component=usuario&action=buscar&id='.$item['idUsuario'].'"> editar <a/>');
     echo("<BR/>");
     echo("<BR/>");
     

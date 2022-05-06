@@ -134,7 +134,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                     window.location.href = 'pages/categorias.php';
                     </script>");
                 }
-
             }
         case 'USUARIO';
             require_once('controller/controllerUsuario.php');
@@ -200,7 +199,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                 require_once("pages/usuario.php");
             } else if ($action == 'EDITAR') {
                 $idUsuario = $_GET['id'];
-                echo("teste");
 
                 $resposta = atualizarUsuario($_POST, $idUsuario);
 
@@ -224,6 +222,92 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                     echo ("<script>
                     alert('CARAI MENÓ, COMO TU FEZ ISSO??');
                     window.location.href = 'pages/usuario.php';
+                    </script>");
+                }
+            }
+        case 'PRODUTO';
+            require_once('controller/controllerProdutos.php');
+
+            if ($action == 'INSERIR') {
+                if ($_POST['nome'] == ""  || $_POST['desconto'] == "" || $_POST['preco'] == "" || $_POST['descricao'] == "") {
+                    $resposta = inserirProdutos($_POST);
+
+                    if (is_bool($resposta)) {
+                        echo ("<script>
+                alert('Produto inserido no banco de dados');
+                window.location.href = 'pages/produtos.php';
+                </script>");
+                    } elseif (is_array($resposta)) {
+                        echo ("<script>
+                alert('" . $resposta["message"] . "');
+                window.location.href = 'pages/produtos.php';
+                </script>");
+                    } else {
+
+                        echo ("<script>
+                alert('CARAI MENÓ, COMO TU FEZ ISSO??');
+                window.location.href = 'pages/produtos.php';
+                </script>");
+                    }
+                } else {
+                    echo ("<script>
+                    alert('Preencha todos os campos para poder cadastrar');
+                    window.location.href = 'pages/usuario.php';
+                    </script>");
+                }
+            } else if ($action == 'DELETAR') {
+
+                $id = strtoupper(($_GET['id']));
+                $resposta = excluirProduto($id);
+
+                if (is_bool($resposta)) {
+                    echo ("<script>
+                alert('Produto excluido do banco de dados');
+                window.location.href = 'pages/produtos.php';
+                </script>");
+                } elseif (is_array($resposta)) {
+                    echo ("<script>
+                alert('" . $resposta["message"] . "');
+                window.location.href = 'pages/produtos.php';
+                </script>");
+                } else {
+
+                    echo ("<script>
+                alert('CARAI MENÓ, COMO TU FEZ ISSO??');
+                window.location.href = 'pages/produtos.php';
+                </script>");
+                }
+            } else if ($action == 'BUSCAR') {
+                $id = strtoupper($_GET['id']);
+
+                $dado = buscarProduto($id);
+
+                $_SESSION['dadosProduto'] = $dado;
+                require_once("pages/produtos.php");
+            } else if ($action == 'EDITAR') {
+                $idProduto = $_GET['id'];
+
+                $resposta = atualizarProduto($_POST, $idProduto);
+                if (is_bool($resposta)) {
+
+                    if ($resposta) {
+
+                        echo ("<script>
+                       alert('Registro atualizado com sucesso');
+                       window.location.href = 'pages/produtos.php';
+                       </script>");
+                    }
+                } elseif (is_array($resposta)) {
+
+                    echo ("<script>
+                    alert('" . $resposta["message"] . "');
+                    window.location.href = 'pages/produtos.php';
+                    </script>");
+                } else {
+
+                    echo ("<script>
+                    alert('CARAI MENÓ, COMO TU FEZ ISSO??');
+                    window.location.href = 'pages/produtos.php';
                     </script>");
                 }
             }

@@ -136,7 +136,7 @@ if(file_exists('../module/config.php')) {
   </section>
   <section class="conteudo-categorias">
       <form action="<?=$form?>" method="post" class="cadastro-categorias">
-          <div classr="cadastro-categorias-campo">
+          <div class="cadastro-categorias-campo">
               <p>Nome: </p>
               <input type="text" name="nome" value="<?= isset($nome)?$nome:null ?>" placeholder="Digite o nome de categoria">
           </div>

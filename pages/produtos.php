@@ -11,6 +11,8 @@ if (file_exists('../module/config.php')) {
 }
 
 $form = $teste . "router.php?component=produto&action=inserir";
+$destaque = 0;
+$foto = "../img/icon/images.png";
 
 if (session_status()) {
 
@@ -18,8 +20,12 @@ if (session_status()) {
 
     $id = $_SESSION['dadosProduto']['id'];
     $nome = $_SESSION['dadosProduto']['nome'];
-
-    $form = $teste . "router.php?component=produto&action=editar&id=" . $id;
+    $descricao = $_SESSION['dadosProduto']['descricao'];
+    $preco = $_SESSION['dadosProduto']['preco'];
+    $desconto = $_SESSION['dadosProduto']['desconto'];
+    $foto = $_SESSION['dadosProduto']['foto'];
+    $destaque = $_SESSION['dadosProduto']['destaque'];
+    $form = $teste . "router.php?component=produto&action=editar&id=" . $id . "&foto=" . $foto;
 
     unset($_SESSION['dadosProduto']);
   }
@@ -109,30 +115,39 @@ if (session_status()) {
 
 
   <section class="conteudo-categorias">
-    <form action="<?= $form ?>" method="post" class="cadastro-categorias">
+    <form action="<?= $form ?>" method="post" enctype="multipart/form-data" class="cadastro-categorias">
       <div class="cadastro-categorias-campo">
         <p>Nome: </p>
-        <input type="text" value="" name="nome" value="">
+        <input type="text" value="<?= isset($nome) ? $nome : null ?>" name="nome">
       </div>
       <div class="cadastro-categorias-campo">
         <p>Descrição: </p>
-        <input type="textarea" value="" name="descricao" value="">
+        <input type="text" name="descricao" value="<?= isset($descricao) ? $descricao : null ?>">
       </div>
       <div class="cadastro-categorias-campo">
         <p>Preço: </p>
-        <input type="number" name="preco" value="" >
+        <input type="number" name="preco" value="<?= isset($preco) ? $preco : null ?>">
       </div>
       <div class="cadastro-categorias-campo">
         <p>Percentual de Desconto: </p>
-        <input type="number" name="desconto" value="" >
+
+        <input type="number" name="desconto" value="<?= isset($desconto) ? $desconto : 1 ?>">
       </div>
       <div class="">
         <p>Destaque: </p>
-        <input type="checkbox" name="chkDestaque" value="">
+        <div>
+          <p>Sim </p>
+          <input type="radio" name="rdoDestaque" <?= $destaque == 1 ? "checked" : null ?> value="true">
+          <p>Não </p>
+          <input type="radio" name="rdoDestaque" <?= $destaque == 0 ? "checked" : null ?> value="false">
+        </div>
       </div>
       <div class="">
         <p>Foto: </p>
-        <input type="file" name="foto" accept=".jpg, .png, .jpeg">
+        <input type="file" name="foto"  accept=".jpg, .png, .jpeg">
+        <div class="fotoForm">
+          <img src="<?=DIRECTORY_FILE_UPLOAD.$foto ?>" alt="">
+        </div>
       </div>
       <button class="cadastro-categoria-botao"> Cadastrar Produto</button>
     </form>
@@ -152,16 +167,30 @@ if (session_status()) {
         <td class="tblCategoriasColunas-destaqu"> Editar </td>
         <td class="tblCategoriasColunas-destaqu"> Excluir </td>
       </tr>
-      <tr class="conteudo-corpo-categoria">
+      <?php
 
-        <td class="conteudo-corpo-categoria-nome"></td>
-        <td class="conteudo-corpo-categoria-nome"></td>
-        <td class="conteudo-corpo-categoria-nome"></td>
-        <td class="conteudo-corpo-categoria-nome"></td>
-        <td class="conteudo-corpo-categoria-nome"></td>
-        <td class="conteudo-corpo-categoria-nome"></td>
-        <td class="conteudo-corpo-categoria-excluir"><a href="#"> editar <a /></td>
-        <td class="conteudo-corpo-categoria-excluir"><a href="#"> excluir <a /></td>
+      require_once($caminho . 'controller/controllerProdutos.php');
+
+      $listProdutos = listarProdutos();
+
+
+      foreach ($listProdutos as $item) {
+      ?>
+        <tr class="conteudo-corpo-categoria">
+
+          <td class="conteudo-corpo-categoria-nome"><?= $item['nome'] ?></td>
+          <td class="conteudo-corpo-categoria-nome"><?= $item['descricao'] ?></td>
+          <td class="conteudo-corpo-categoria-nome"><?= $item['preco'] ?></td>
+          <td class="conteudo-corpo-categoria-nome"><?= $item['desconto'] ?></td>
+          <td class="conteudo-corpo-categoria-nome"><?= $item['destaque'] == 1 ? "Em destaque" : null ?></td>
+          <td class="conteudo-corpo-categoria-nome">
+            <img src="<?= $cmsCaminho.DIRECTORY_FILE_UPLOAD.$item['foto'] ?>">
+          </td>
+          <td class="conteudo-corpo-categoria-editar"><a href="<?= $cmsCaminho ?>router.php?component=produto&action=buscar&id=<?= $item['id'] ?>"> editar <a /></td>
+          <td class="conteudo-corpo-categoria-excluir"><a href="<?= $cmsCaminho ?>router.php?component=produto&action=deletar&id=<?= $item['id'] ?>"> excluir <a /></td>
+        </tr>
+      <?php } ?>
+
       </tr>
     </table>
   </section>

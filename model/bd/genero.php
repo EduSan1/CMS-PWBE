@@ -26,7 +26,7 @@ function InsertGenero($dadoscontato){
             fecharConexaoMysql($conexao);                        
             return array(
                 'idErro'  => 3,
-                'message' => 'Não foi encontrado no banco'
+                'message' => 'Não foi possivel cadastrar no banco'
             );
         }
     } 

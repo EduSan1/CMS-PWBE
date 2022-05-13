@@ -121,11 +121,11 @@ if (session_status()) {
     <form action="<?= $form ?>" method="post" class="cadastro-categorias">
       <div class="cadastro-categorias-campo">
         <p>Nome: </p>
-        <input type="text" value="<?= isset($nome) ? $nome : null ?>" name="nome" value="">
+        <input type="text" value="<?= isset($nome) ? $nome : null ?>" name="nome" >
       </div>
       <div class="cadastro-categorias-campo">
         <p>Email: </p>
-        <input type="text" value="<?= isset($email) ? $email : null ?>" name="email" value="">
+        <input type="text" value="<?= isset($email) ? $email : null ?>" name="email" >
       </div>
       <div class="cadastro-categorias-campo">
         <p>Senha: </p>

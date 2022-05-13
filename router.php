@@ -229,8 +229,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
             require_once('controller/controllerProdutos.php');
 
             if ($action == 'INSERIR') {
-                if ($_POST['nome'] == ""  || $_POST['desconto'] == "" || $_POST['preco'] == "" || $_POST['descricao'] == "") {
-                    $resposta = inserirProdutos($_POST);
+
+                if ($_POST['nome'] != ""  || $_POST['desconto'] != "" || $_POST['preco'] != "" || $_POST['descricao'] != "" || $_POST['foto'] != "" || $_POST['rdoDestaque'] != "") {
+
+  
+                    if (isset($_FILES) && !empty($_FILES))
+                        $resposta = inserirProduto($_POST, $_FILES);
+                    else
+                        $resposta = inserirProduto($_POST, null);
+
 
                     if (is_bool($resposta)) {
                         echo ("<script>
@@ -252,7 +259,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                 } else {
                     echo ("<script>
                     alert('Preencha todos os campos para poder cadastrar');
-                    window.location.href = 'pages/usuario.php';
+                    window.location.href = 'pages/produtos.php';
                     </script>");
                 }
             } else if ($action == 'DELETAR') {
@@ -286,8 +293,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                 require_once("pages/produtos.php");
             } else if ($action == 'EDITAR') {
                 $idProduto = $_GET['id'];
+                $foto = $_GET['foto'];
 
-                $resposta = atualizarProduto($_POST, $idProduto);
+                $arrayDados = array (
+                    'id' => $idProduto,
+                    'foto' => $foto,
+                    'file' => $_FILES
+                );
+
+                $resposta = atualizarProduto($_POST, $arrayDados);
                 if (is_bool($resposta)) {
 
                     if ($resposta) {

@@ -2,7 +2,6 @@
 
 /*******************************************************************************************
  Objetivo: arquivo responsável pela manipulação de dados de genero
- Obs: esse arquivo fará a ponte entre a View e a Model
  Autor: Eduardo Santos Nascimento
 Data: 07/03/2022
 Versão 1.0

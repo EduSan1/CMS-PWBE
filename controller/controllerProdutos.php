@@ -54,15 +54,30 @@ function excluirProduto($id) {
         );
     }
 }
-function inserirProduto($dadosProduto) {
+function inserirProduto($dadosProduto , $file) {
+
+    $photoName = (string) null;
     
     if(!empty($dadosProduto)) {
         if(!empty($dadosProduto['nome']) || !empty($dadosProduto['descricao']) || !empty($dadosProduto['preco']) || !empty($dadosProduto['desconto'])) {
+           
+            if ($file['foto']['name'] != null) {
+                require_once('module/upload.php');
+                $photoName = uploadFile($file["foto"]);
+                // se for um array retorna o erro qu ta no array da variavel
+                if (is_array($photoName)){
+                    return $photoName;
+                }
+            }
+           
             $arrayDados = array (
                 'nome' => $dadosProduto['nome'],
                 'descricao' => $dadosProduto['descricao'],
                 'preco' => $dadosProduto['preco'],
-                'desconto' => $dadosProduto['desconto']
+                'desconto' => $dadosProduto['desconto'],
+                'foto'       => $photoName,
+                'destaque'  => $dadosProduto['rdoDestaque']
+                
             );
 
             require_once("model/bd/produto.php");
@@ -89,6 +104,7 @@ function buscarProduto($id) {
     }
 
     require_once($caminhoSession);
+
     if ($id != 0 && !empty($id) && is_numeric($id)) {
 
         $dado = selectByIdProduto($id);
@@ -104,16 +120,32 @@ function buscarProduto($id) {
             'message' => 'informe um id validado'
         );
 }
-function atualizarProduto($dadosProduto, $id) {
+function atualizarProduto($dadosProduto, $array) {
+    $id = $array['id'];
+    $foto = $array['foto'];
+    $file = $array['file'];
+
     if (!empty($dadosProduto)) {
         if(!empty($dadosProduto['nome']) || !empty($dadosProduto['descricao']) || !empty($dadosProduto['preco']) || !empty($dadosProduto['desconto'])) {
             if (!empty($id) && $id != 0 && is_numeric($id)) {
+
+                if ($file["foto"]["name"] != null) {
+                    require_once('module/upload.php');
+                    $novaFoto = uploadFile($file["foto"]);
+                    require_once('module/config.php');
+                //permite apagar a foto fisicamente do diretório no servidor
+                unlink(DIRECTORY_FILE_UPLOAD.$foto);
+                }else {
+                    $novaFoto = $foto;
+                }
                 $arrayDados = array(
                     'id'         => $id,
                     'nome'       => $dadosProduto['nome'],
                     'descricao'       => $dadosProduto['descricao'],
                     'preco'       => $dadosProduto['preco'],
-                    'desconto'       => $dadosProduto['desconto']
+                    'desconto'       => $dadosProduto['desconto'],
+                    'foto'       => $novaFoto,
+                    'destaque'  => $dadosProduto['rdoDestaque']
 
                 );
                 echo ($arrayDados);
@@ -135,6 +167,6 @@ function atualizarProduto($dadosProduto, $id) {
         }
         }
     }
-}
+
 
 ?>

@@ -101,12 +101,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
 
                 $dado = buscarGenero($id);
 
+                var_dump($dado);
+
 
                 $_SESSION['dadosGenero'] = $dado;
-
-                // header('location: pages/categorias.php');
-
                 require_once("pages/categorias.php");
+
             } else if ($action == "EDITAR") {
                 $idContato = $_GET['id'];
 

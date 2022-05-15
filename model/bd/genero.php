@@ -50,7 +50,7 @@ function selectAllGeneros() {
 
         while ($rsDados = mysqli_fetch_assoc($result)) {
             $arrayDados[$cont] = array(
-                "id" => $rsDados['idGenero'],
+                "id" => $rsDados['idgenero'],
                 "nome" => $rsDados['nome']
             );
             $cont++;
@@ -95,7 +95,7 @@ function selectByIdGenero($id) {
 
         if ($rsDados = mysqli_fetch_assoc($result)) {
             $arrayDados = array(
-                "id"       => $rsDados['idGenero'],
+                "id"       => $rsDados['idgenero'],
                 "nome"       => $rsDados['nome']
             );
         };

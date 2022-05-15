@@ -9,10 +9,16 @@
     
     **********************************************************************************************************/
 
+    // const SERVER = 'localhost';
+    // const USER = 'root';
+    // const PASSWORD = 'bcd127';
+    // const DATABASE = 'dbFlyMangas';
+
     const SERVER = 'localhost';
     const USER = 'root';
-    const PASSWORD = 'bcd127';
+    const PASSWORD = '05102002edu';
     const DATABASE = 'dbFlyMangas';
+
 
     $resultado = conexaoMysql();
 

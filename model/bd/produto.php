@@ -65,8 +65,6 @@ function selectAllProdutos(){
             $cont++;
         };
 
-    
-
         fecharConexaoMysql($conexao);
         return $arrayDados;
 

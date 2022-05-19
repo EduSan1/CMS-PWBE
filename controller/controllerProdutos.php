@@ -34,14 +34,25 @@ function listarProdutos() {
         return false;
     }
 }
-function excluirProduto($id) {
+function excluirProduto($arrayDados) {
+
+    $id = $arrayDados['id'];
+    $foto = $arrayDados['foto'];
     
     if ($id != 0 && !empty($id) && is_numeric($id)) {
 
+        
         require_once("model/bd/produto.php");
 
-        if (deleteProduto($id))
+        if (deleteProduto($id)){
+            
+            if ($foto != null) {
+                require_once('module/config.php');
+                unlink(DIRECTORY_FILE_UPLOAD.$foto);
+      
+        }
             return true;
+        }
         else
             return array(
                 'idErro'  => 3,

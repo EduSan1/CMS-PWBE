@@ -3,10 +3,12 @@
 if(file_exists('../module/config.php')) {
   require_once('../module/config.php');
   $teste = "../";
+  $pages = "";
   $cmsCaminho = "../";
 }else {
   require_once('module/config.php');
   $teste = "";
+  $pages = "pages/";
   $cmsCaminho = "../CMS-PWBE/";
 }
 
@@ -65,14 +67,14 @@ if(file_exists('../module/config.php')) {
     <div class="menu-acoes">
       <div class="menu-acoes-esquerda">
         <div class="menu-adm-produtos">
-          <a href="produtos.php">
+          <a href="<?=$pages;?>produtos.php">
             <img src="<?= $cmsCaminho ?>img/icon/produtos.png" class="icones" alt="" />
             <p>Adm. de Produtos</p>
           </a>
         </div>
 
         <div class="menu-adm-categorias">
-          <a href="categorias.php">
+          <a href="<?=$pages;?>categorias.php">
             <img src="<?= $cmsCaminho ?>img/icon/categorias.png" class="icones" alt="" />
             <p>Adm. de Categorias</p>
           </a>
@@ -86,7 +88,7 @@ if(file_exists('../module/config.php')) {
         </div>
 
         <div class="menu-adm-usuarios">
-          <a href="usuario.php">
+          <a href="<?=$pages;?>usuario.php">
             <img src="<?= $cmsCaminho ?>img/icon/usuarios.png" class="icones" alt="" />
             <p>Adm. de Usuários</p>
           </a>

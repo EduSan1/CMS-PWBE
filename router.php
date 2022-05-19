@@ -12,6 +12,7 @@
 
 $action = (string) null;
 $component = (string) null;
+$foto = "teste";
 if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET') {
     $component = strtoupper($_GET['component']);
     $action = strtoupper($_GET['action']);
@@ -42,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                 </script>");
                 }
             }
-
+            break;
         case 'GENERO';
             require_once('controller/controllerGenero.php');
 
@@ -101,14 +102,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
 
                 $dado = buscarGenero($id);
 
-                var_dump($dado);
-
 
                 $_SESSION['dadosGenero'] = $dado;
                 require_once("pages/categorias.php");
 
             } else if ($action == "EDITAR") {
                 $idContato = $_GET['id'];
+
 
                 $resposta = atualizarGenero($_POST, $idContato);
 
@@ -135,6 +135,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                     </script>");
                 }
             }
+            break;
         case 'USUARIO';
             require_once('controller/controllerUsuario.php');
 
@@ -225,6 +226,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                     </script>");
                 }
             }
+            break;
         case 'PRODUTO';
             require_once('controller/controllerProdutos.php');
 
@@ -263,10 +265,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                     </script>");
                 }
             } else if ($action == 'DELETAR') {
+    
 
                 $id = strtoupper(($_GET['id']));
-                $resposta = excluirProduto($id);
+                $foto = $_GET['foto'];
+         
+                $arrayDados = array(
+                    "id" => $id,
+                    "foto" => $foto
+                );
 
+                $resposta = excluirProduto($arrayDados);
+          
                 if (is_bool($resposta)) {
                     echo ("<script>
                 alert('Produto excluido do banco de dados');
@@ -325,5 +335,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                     </script>");
                 }
             }
+            break;
     }
 }

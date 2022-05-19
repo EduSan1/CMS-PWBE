@@ -3,10 +3,12 @@
 if (file_exists('../module/config.php')) {
   require_once('../module/config.php');
   $teste = "../";
+  $pages = "";
   $cmsCaminho = "../";
 } else {
   require_once('module/config.php');
   $teste = "";
+  $pages = "pages/";
   $cmsCaminho = "../CMS-PWBE/";
 }
 
@@ -72,14 +74,14 @@ if (session_status()) {
     <div class="menu-acoes">
       <div class="menu-acoes-esquerda">
         <div class="menu-adm-produtos">
-          <a href="#">
+          <a href="<?=$pages;?>produtos.php">
             <img src="<?= $cmsCaminho ?>img/icon/produtos.png" class="icones" alt="" />
             <p>Adm. de Produtos</p>
           </a>
         </div>
 
         <div class="menu-adm-categorias">
-          <a href="categorias.php">
+          <a href="<?=$pages;?>categorias.php">
             <img src="<?= $cmsCaminho ?>img/icon/categorias.png" class="icones" alt="" />
             <p>Adm. de Categorias</p>
           </a>
@@ -93,7 +95,7 @@ if (session_status()) {
         </div>
 
         <div class="menu-adm-usuarios">
-          <a href="usuario.php">
+          <a href="<?=$pages;?>usuario.php">
             <img src="<?= $cmsCaminho ?>img/icon/usuarios.png" class="icones" alt="" />
             <p>Adm. de Usuários</p>
           </a>
@@ -171,6 +173,7 @@ if (session_status()) {
 
       require_once($caminho . 'controller/controllerProdutos.php');
 
+      echo($caminho . 'controller/controllerProdutos.php');
       $listProdutos = listarProdutos();
 
 
@@ -187,7 +190,7 @@ if (session_status()) {
             <img src="<?= $cmsCaminho.DIRECTORY_FILE_UPLOAD.$item['foto'] ?>">
           </td>
           <td class="conteudo-corpo-categoria-editar"><a href="<?= $cmsCaminho ?>router.php?component=produto&action=buscar&id=<?= $item['id'] ?>"> editar <a /></td>
-          <td class="conteudo-corpo-categoria-excluir"><a href="<?= $cmsCaminho ?>router.php?component=produto&action=deletar&id=<?= $item['id'] ?>"> excluir <a /></td>
+          <td class="conteudo-corpo-categoria-excluir"><a href="<?= $cmsCaminho ?>router.php?component=produto&action=deletar&id=<?= $item['id'] ?>&foto=<?= $item['foto']?>"> excluir <a /></td>
         </tr>
       <?php } ?>
 

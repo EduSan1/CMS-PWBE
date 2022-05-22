@@ -88,3 +88,6 @@
      width: 10%;
      text-align: center;
 }
+.conteudo-corpo-categoria-img{
+    max-width: 200px;  
+}

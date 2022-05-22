@@ -105,7 +105,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
 
                 $_SESSION['dadosGenero'] = $dado;
                 require_once("pages/categorias.php");
-
             } else if ($action == "EDITAR") {
                 $idContato = $_GET['id'];
 
@@ -234,7 +233,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
 
                 if ($_POST['nome'] != ""  || $_POST['desconto'] != "" || $_POST['preco'] != "" || $_POST['descricao'] != "" || $_POST['foto'] != "" || $_POST['rdoDestaque'] != "") {
 
-  
+
                     if (isset($_FILES) && !empty($_FILES))
                         $resposta = inserirProduto($_POST, $_FILES);
                     else
@@ -265,18 +264,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                     </script>");
                 }
             } else if ($action == 'DELETAR') {
-    
+
 
                 $id = strtoupper(($_GET['id']));
                 $foto = $_GET['foto'];
-         
+
                 $arrayDados = array(
                     "id" => $id,
                     "foto" => $foto
                 );
 
                 $resposta = excluirProduto($arrayDados);
-          
+
                 if (is_bool($resposta)) {
                     echo ("<script>
                 alert('Produto excluido do banco de dados');
@@ -305,7 +304,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                 $idProduto = $_GET['id'];
                 $foto = $_GET['foto'];
 
-                $arrayDados = array (
+                $arrayDados = array(
                     'id' => $idProduto,
                     'foto' => $foto,
                     'file' => $_FILES
@@ -332,6 +331,98 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' || $_SERVER['REQUEST_METHOD'] == 'GET')
                     echo ("<script>
                     alert('CARAI MENÓ, COMO TU FEZ ISSO??');
                     window.location.href = 'pages/produtos.php';
+                    </script>");
+                }
+            }
+        case 'PRODUTOGENERO';
+            require_once('controller/controllerProdutoGenero.php');
+
+            if ($action == 'INSERIR') {
+
+                if ($_POST['idProduto'] != ""  || $_POST['idGenero'] != "" ) {
+                        $resposta = inserirProdutoGenero($_POST, null);
+            
+                    if (is_bool($resposta)) {
+                        echo ("<script>
+                alert('Produto inserido no banco de dados');
+                window.location.href = 'pages/produtoGenero.php';
+                </script>");
+                    } elseif (is_array($resposta)) {
+                        echo ("<script>
+                alert('" . $resposta["message"] . "');
+                window.location.href = 'pages/produtoGenero.php';
+                </script>");
+                    } else {
+
+                        echo ("<script>
+                alert('CARAI MENÓ, COMO TU FEZ ISSO??');
+                window.location.href = 'pages/produtoGenero.php';
+                </script>");
+                    }
+                } else {
+                    echo ("<script>
+                    alert('Preencha todos os campos para poder cadastrar');
+                    window.location.href = 'pages/produtoGenero.php';
+                    </script>");
+                }
+            }
+             else if ($action == 'DELETAR') {
+                $id = strtoupper(($_GET['id']));
+           
+                $resposta = excluirProdutoGenero($id);
+
+                if (is_bool($resposta)) {
+                    echo ("<script>
+                alert('Produto excluido do banco de dados');
+                window.location.href = 'pages/produtoGenero.php';
+                </script>");
+                } elseif (is_array($resposta)) {
+                    echo ("<script>
+                alert('" . $resposta["message"] . "');
+                window.location.href = 'pages/produtoGenero.php';
+                </script>");
+                } else {
+
+                    echo ("<script>
+                alert('CARAI MENÓ, COMO TU FEZ ISSO??');
+                window.location.href = 'pages/produtoGenero.php';
+                </script>");
+                }
+            } 
+            else if ($action == 'BUSCAR') {
+                $id = strtoupper($_GET['id']);
+
+                $dado = buscarProdutosGeneros($id);
+
+                $_SESSION['dadosProduto_Genero'] = $dado;
+                require_once("pages/produtoGenero.php");
+
+            } else if ($action == 'EDITAR') {
+
+                $id = $_GET['id'];
+              
+
+                $resposta = atualizarProdutoGenero($_POST,$id);
+                if (is_bool($resposta)) {
+
+                    if ($resposta) {
+
+                        echo ("<script>
+                       alert('Registro atualizado com sucesso');
+                       window.location.href = 'pages/produtoGenero.php';
+                       </script>");
+                    }
+                } elseif (is_array($resposta)) {
+
+                    echo ("<script>
+                    alert('" . $resposta["message"] . "');
+                    window.location.href = 'pages/produtoGenero.php';
+                    </script>");
+                } else {
+
+                    echo ("<script>
+                    alert('CARAI MENÓ, COMO TU FEZ ISSO??');
+                    window.location.href = 'pages/produtoGenero.php';
                     </script>");
                 }
             }

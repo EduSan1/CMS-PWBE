@@ -187,7 +187,7 @@ if (session_status()) {
           <td class="conteudo-corpo-categoria-nome"><?= $item['desconto'] ?></td>
           <td class="conteudo-corpo-categoria-nome"><?= $item['destaque'] == 1 ? "Em destaque" : null ?></td>
           <td class="conteudo-corpo-categoria-nome">
-            <img src="<?= $cmsCaminho.DIRECTORY_FILE_UPLOAD.$item['foto'] ?>">
+            <img class="conteudo-corpo-categoria-img" src="<?= $cmsCaminho.DIRECTORY_FILE_UPLOAD.$item['foto'] ?>">
           </td>
           <td class="conteudo-corpo-categoria-editar"><a href="<?= $cmsCaminho ?>router.php?component=produto&action=buscar&id=<?= $item['id'] ?>"> editar <a /></td>
           <td class="conteudo-corpo-categoria-excluir"><a href="<?= $cmsCaminho ?>router.php?component=produto&action=deletar&id=<?= $item['id'] ?>&foto=<?= $item['foto']?>"> excluir <a /></td>
